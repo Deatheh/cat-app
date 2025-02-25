@@ -6,3 +6,8 @@ db:
   port: '5436'
   dbname: 'postgres'
   sslmode: 'disable'
+
+minio:
+  endpoint: '127.0.0.1:9000'
+  accesskeyid: 'minio'
+  secretaccesskey: 'minio124'

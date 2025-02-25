@@ -24,7 +24,7 @@ func main() {
 		logrus.Fatalf("errore loading env variables: %s", err.Error())
 	}
 
-	db, err := repository.NewPostgresDB(repository.Config{
+	db, err := repository.NewPostgresDB(repository.ConfigDB{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
@@ -36,7 +36,15 @@ func main() {
 		logrus.Fatalf("failed to initializing db: %s", err.Error())
 	}
 
-	repos := repository.NewRepository(db)
+	minioDb, err := repository.MinioConnection(repository.ConfigMinio{
+		Endpoint:        viper.GetString("minio.endpoint"),
+		AccessKeyID:     viper.GetString("minio.accesskeyid"),
+		SecretAccessKey: viper.GetString("secretaccesskey"),
+	})
+	if err != nil {
+		logrus.Fatalf("failed to initializing minioDb: %s", err.Error())
+	}
+	repos := repository.NewRepository(db, minioDb)
 	services := service.NewService(repos)
 	handlers := handler.NewHandler(services)
 
