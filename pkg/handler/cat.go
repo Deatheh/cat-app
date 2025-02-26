@@ -8,6 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Create Cat
+// @Security ApiKeyAuth
+// @Tags cats
+// @Description create cat
+// @ID create-list
+// @Accept  json
+// @Produce  json
+// @Param input body cat.Cat true "list info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/lists/:id/cats [post]
 func (h *Handler) createCat(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -37,6 +50,19 @@ func (h *Handler) createCat(c *gin.Context) {
 		"id": id,
 	})
 }
+
+// @Summary Get Cat By Id
+// @Security ApiKeyAuth
+// @Tags cats
+// @Description get cat by id
+// @ID get-cat-by-id
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} cat.Cat
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/lists/:id/cats/:cat_id [get]
 func (h *Handler) getCatById(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -64,6 +90,19 @@ func (h *Handler) getCatById(c *gin.Context) {
 
 	c.JSON(http.StatusOK, item)
 }
+
+// @Summary Get All Cats
+// @Security ApiKeyAuth
+// @Tags cats
+// @Description get all cats
+// @ID get-all-cats
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} []cat.Cat
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/lists/:id/cats [get]
 func (h *Handler) getAllCat(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -85,6 +124,20 @@ func (h *Handler) getAllCat(c *gin.Context) {
 
 	c.JSON(http.StatusOK, items)
 }
+
+// @Summary Update Cat
+// @Security ApiKeyAuth
+// @Tags cats
+// @Description update cat
+// @ID update-cat
+// @Accept  json
+// @Produce  json
+// @Param input body cat.Cat true "list info"
+// @Success 200 {integer} statusResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/lists/:id/cats/:cat_id [put]
 func (h *Handler) updeteCat(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
@@ -115,6 +168,19 @@ func (h *Handler) updeteCat(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
+
+// @Summary Delete Cat
+// @Security ApiKeyAuth
+// @Tags cats
+// @Description delete cat by id
+// @ID delete-cats
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} statusResponse
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /api/lists/:id/cats/:cat_id [delete]
 func (h *Handler) deleteCat(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
